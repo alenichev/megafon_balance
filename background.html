@@ -1,0 +1,109 @@
+<html>
+<head>
+<script>
+var badge = "?";
+var pollIntervalMin = 1000 * 60;  // 1 minute
+var pollIntervalMax = 1000 * 60 * 60;  // 1 hour
+var requestFailureCount = 0;  // used for exponential backoff
+var requestTimeout = 1000 * 2;  // 5 seconds
+
+function getUrl() {
+  var url = "https://www.serviceguide.megafonmoscow.ru/TRAY_INFO/TRAY_INFO";
+  if (localStorage.login)
+    url += "?LOGIN=" + localStorage.login;
+  if (localStorage.password)
+    url += "&PASSWORD=" + localStorage.password;
+  return url;
+}
+
+function scheduleRequest() {
+  var randomness = Math.random() * 2;
+  var exponent = Math.pow(2, requestFailureCount);
+  var delay = Math.min(randomness * pollIntervalMin * exponent,
+                       pollIntervalMax);
+  delay = Math.round(delay);
+
+  window.setTimeout(startRequest, delay);
+}
+
+// ajax stuff
+function startRequest() {
+  getBalance(
+    function(balance) {
+      updateBalance(balance);
+      scheduleRequest();
+    },
+    function() {
+      showLoggedOut();
+      scheduleRequest();
+    }
+  );
+}
+
+function getBalance(onSuccess, onError) {
+  var xhr = new XMLHttpRequest();
+  var abortTimerId = window.setTimeout(function() {
+    xhr.abort();  // synchronously calls onreadystatechange
+  }, requestTimeout);
+
+  function handleSuccess(balance) {
+    requestFailureCount = 0;
+    window.clearTimeout(abortTimerId);
+    if (onSuccess)
+      onSuccess(balance);
+  }
+
+  function handleError() {
+    ++requestFailureCount;
+    window.clearTimeout(abortTimerId);
+    if (onError)
+      onError();
+  }
+
+  try {
+    xhr.onreadystatechange = function(){
+      if (xhr.readyState != 4)
+        return;
+
+      if (xhr.responseXML) {
+        var xmlDoc = xhr.responseXML;
+        var balance = xmlDoc.getElementsByTagName('BALANCE');
+        if (balance) {
+          handleSuccess(balance[0].textContent);
+          return;
+        } else {
+          //console.error(chrome.i18n.getMessage("gmailcheck_node_error"));
+          console.error("node error");
+        }
+      }
+
+      handleError();
+    }
+
+    xhr.onerror = function(error) {
+      handleError();
+    }
+
+    xhr.open("GET", getUrl(), true);
+    xhr.send(null);
+  } catch(e) {
+    //console.error(chrome.i18n.getMessage("gmailcheck_exception", e));
+    console.error(e);
+    handleError();
+  }
+}
+
+function updateBalance(balance) {
+  if (badge != balance) {
+    badge = balance.substring(0,5);
+    chrome.browserAction.setBadgeText({
+      text: badge != "0" ? badge : ""
+    });
+    chrome.browserAction.setBadgeBackgroundColor({color:[208, 0, 24, 255]});
+  }
+}
+</script>
+</head>
+<body onload="startRequest()">
+</body>
+</html>

@@ -1,0 +1,16 @@
+{
+  "name": "MegaFon Balance",
+  "version": "1.0",
+  "description": "Shows the balance of your mobile phone",
+  "icons": {  "16": "images/icon16.png",
+              "48": "images/icon48.png",
+             "128": "images/icon128.png" },
+  "browser_action": {
+    "default_icon": "images/icon19.png",
+    "default_title": ""
+  },
+  "background_page": "background.html",
+  "options_page": "options.html",
+  "permissions": [ "https://www.serviceguide.megafonmoscow.ru/*" ],
+  "incognito": "spanning"
+}

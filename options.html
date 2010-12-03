@@ -1,0 +1,104 @@
+<html>
+<head>
+<title>MegaFon Balance - Options</title>
+<style>
+body {
+  font-family: helvetica, arial, sans-serif;
+  font-size: 80%;
+  margin: 10px;
+}
+
+#header {
+  padding-bottom: 1.5em;
+  padding-top: 1.5em;
+}
+
+#header h1 {
+  font-size: 156%;
+  display: inline;
+  padding-bottom: 43px;
+  padding-left: 75px;
+  padding-top: 40px;
+  background: url(images/icon128.png) no-repeat;
+  background-size: 67px;
+  background-position: 1px 18px;
+}
+
+.section-header {
+  background: #ebeff9;
+  border-top: 1px solid #b5c7de;
+  font-size: 99%;
+  padding: 3px 0 2px 5px;
+  font-weight: bold;
+  margin-bottom: 1em;
+  margin-top: 4em;
+}
+
+.section-header.first {
+  margin-top: 1em;
+}
+
+#login {
+  width: 100px;
+  margin-left: 2px;
+}
+
+#password {
+  width: 100px;
+  margin-left: 2px;
+}
+
+#footer {
+  margin-top: 4em;
+}
+</style>
+</head>
+<body>
+
+<div id="header"><h1>MegaFon Balance Options</h1></div>
+
+<div class="section-header first">Service-Guide Account Information</div>
+<p>To use MegaFon balance checker enter your service-guide account information here.</p>
+<p>Login:<input type="text" id="login" oninput="markDirty()">
+Password:<input type="text" id="password" oninput="markDirty()"></p>
+
+<div id="footer">
+  <button id="save-button" style="font-weight:bold" onclick="save()">Save</button>
+  <button onclick="init()">Cancel</button>
+</div>
+
+<script>
+var login;
+var password;
+var saveButton;
+
+init();
+
+function init() {
+  login = document.getElementById("login");
+  password = document.getElementById("password");
+  saveButton = document.getElementById("save-button");
+
+  login.value = localStorage.login || "";
+  password.value = localStorage.password || "";
+  markClean();
+}
+
+function save() {
+  localStorage.login = login.value;
+  localStorage.password = password.value;
+  markClean();
+
+  chrome.extension.getBackgroundPage().init();
+}
+
+function markDirty() {
+  saveButton.disabled = false;
+}
+
+function markClean() {
+  saveButton.disabled = true;
+}
+</script>
+</body>
+</html>
