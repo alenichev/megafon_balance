@@ -1,10 +1,11 @@
 {
-  "name": "MegaFon Balance",
+  "name": "__MSG_name__",
   "version": "1.0",
-  "description": "Shows the balance of your mobile phone",
+  "description": "__MSG_description__",
   "icons": {  "16": "images/icon16.png",
               "48": "images/icon48.png",
              "128": "images/icon128.png" },
+  "default_locale": "en",
   "browser_action": {
     "default_icon": "images/icon19.png",
     "default_title": ""
