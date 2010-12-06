@@ -1,10 +1,10 @@
 {
   "name": {
-    "message": "Баланс МегаФон",
+    "message": "п▒п╟п╩п╟п╫я│ п°п╣пЁп╟п╓п╬п╫",
     "description": "Extension name in manifest."
   },
   "description": {
-    "message": "Показывает баланс мобильного телефона",
+    "message": "п÷п╬п╨п╟п╥я▀п╡п╟п╣я┌ п╠п╟п╩п╟п╫я│ п╪п╬п╠п╦п╩я▄п╫п╬пЁп╬ я┌п╣п╩п╣я└п╬п╫п╟",
     "description": "Extension description in manifest."
   }
 }
