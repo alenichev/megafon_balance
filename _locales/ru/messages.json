@@ -1,0 +1,10 @@
+{
+  "name": {
+    "message": "Баланс МегаФон",
+    "description": "Extension name in manifest."
+  },
+  "description": {
+    "message": "Показывает баланс мобильного телефона",
+    "description": "Extension description in manifest."
+  }
+}

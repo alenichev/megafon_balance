@@ -1,0 +1,10 @@
+{
+  "name": {
+    "message": "MegaFon Balance",
+    "description": "Extension name in manifest."
+  },
+  "description": {
+    "message": "Shows the balance of your mobile phone",
+    "description": "Extension description in manifest."
+  }
+}
