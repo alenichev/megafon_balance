@@ -34,7 +34,7 @@ function startRequest() {
       scheduleRequest();
     },
     function() {
-      showLoggedOut();
+      showUnknownBalance();
       scheduleRequest();
     }
   );
@@ -101,6 +101,12 @@ function updateBalance(balance) {
     });
     chrome.browserAction.setBadgeBackgroundColor({color:[208, 0, 24, 255]});
   }
+}
+
+function showUnknownBalance() {
+  unreadCount = -1;
+  chrome.browserAction.setBadgeBackgroundColor({color:[190, 190, 190, 230]});
+  chrome.browserAction.setBadgeText({text:"?"});
 }
 </script>
 </head>
