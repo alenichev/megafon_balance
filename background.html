@@ -95,7 +95,7 @@ function getBalance(onSuccess, onError) {
 
 function updateBalance(balance) {
   if (badge != balance) {
-    badge = balance.substring(0,5);
+    badge = balance.substring(0,4);
     chrome.browserAction.setBadgeText({
       text: badge != "0" ? badge : ""
     });
